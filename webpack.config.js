@@ -10,7 +10,7 @@ module.exports = {
   module: {
     loaders: [{
       exclude: /node_modules/,
-      loaders: ['babel', __dirname + '/lib/pre-loader']
+      loaders: ['babel']
     }]
   },
   resolve: {
