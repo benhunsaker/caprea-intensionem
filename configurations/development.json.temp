@@ -1,0 +1,18 @@
+{
+  "db": { "location": "mongodb://localhost/db" },
+  "port" : 2015,
+  "url"  : "http://127.0.0.1:2015",
+  "assets": {
+    "server"    : "http://127.0.0.1:3000",
+    "optimized" : false
+  },
+  "passport": {
+    "strategy": "local"
+  },
+  "log": {
+    "on"       : true,
+    "filename" : "/tmp/dev.log",
+    "level"    : "debug"
+  },
+  "api": {}
+}
