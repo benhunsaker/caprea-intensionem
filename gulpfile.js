@@ -21,7 +21,6 @@ gulp.task('js', function () {
       envs: ['browser', 'es6']
     }))
     .pipe(plugins.eslint.format())
-    //.pipe(plugins.eslint.failAfterError())
     .pipe(webpack(webpack_conf))
     .pipe(gulp.dest('./public/javascripts/'));
 });

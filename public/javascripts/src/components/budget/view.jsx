@@ -1,22 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchBudget, resetCurrentBudget } from '../../actions';
+import { fetchBudget, removeCurrentBudget } from '../../actions';
 
 import { Form } from 'formsy-react';
 import FRC, { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } from 'formsy-react-components';
 
 class ViewBudget extends Component {
-  constructor (props) {
-    super(props);
-  }
-
   componentWillMount () {
     this.props.fetchBudget(this.props.params.budget_id);
   }
 
   componentWillUnmount () {
-    this.props.resetCurrentBudget();
+    this.props.removeCurrentBudget();
   }
 
   componentWillReceiveProps (props) {
@@ -40,8 +36,9 @@ class ViewBudget extends Component {
 }
 ViewBudget.propTypes = {
   budget: PropTypes.object,
+  params: PropTypes.object.isRequired,
   fetchBudget: PropTypes.func,
-  params: PropTypes.object.isRequired
+  removeCurrentBudget: PropTypes.func
 };
 
 function mapStateToProps (state) {
@@ -51,7 +48,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({fetchBudget, resetCurrentBudget}, dispatch);
+  return bindActionCreators({fetchBudget, removeCurrentBudget}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewBudget);

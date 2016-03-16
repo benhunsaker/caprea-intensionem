@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { createBudget, resetCurrentBudget } from '../../actions';
 
 import { Form } from 'formsy-react';
-import FRC, { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } from 'formsy-react-components';
+import FRC, { Input } from 'formsy-react-components';
 
 const MyForm = React.createClass({
   mixins: [FRC.ParentContextMixin],
@@ -36,6 +36,10 @@ class NewBudget extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.disableButton = this.disableButton.bind(this);
     this.enableButton = this.enableButton.bind(this);
+  }
+
+  componentWillMount () {
+    this.props.resetCurrentBudget();
   }
 
   onSubmit (data) {

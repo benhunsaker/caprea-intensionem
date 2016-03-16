@@ -4,13 +4,23 @@ export const CREATE_BUDGET = 'CREATE_BUDGET';
 export const FETCH_BUDGET = 'FETCH_BUDGET';
 export const FETCH_ALL_BUDGETS = 'FETCH_ALL_BUDGETS';
 export const RESET_CURRENT_BUDGET = 'RESET_CURRENT_BUDGET';
+export const REMOVE_CURRENT_BUDGET = 'RESET_CURRENT_BUDGET';
 
 const budget_url = '/api/budget';
 
 export function resetCurrentBudget(budget) {
   return {
     type: RESET_CURRENT_BUDGET,
-    payload: budget
+    payload: {
+      name: null,
+      domain: {start:null, end: null}
+    }
+  }
+}
+export function removeCurrentBudget() {
+  return {
+    type: REMOVE_CURRENT_BUDGET,
+    payload: null
   }
 }
 

@@ -1,9 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { FETCH_ALL_BUDGETS } from '../actions';
 import { fetchAllBudgets } from '../actions';
+import { Link } from 'react-router';
 
 class Sidebar extends Component {
   constructor (props) {
