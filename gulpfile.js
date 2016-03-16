@@ -16,16 +16,7 @@ gulp.task('start', function() {
 gulp.task('js', function () {
   return gulp.src('./public/javascripts/**/*')
     .pipe(plugins.eslint({
-      extends: 'eslint:recommended',
-      ecmaFeatures: {
-        'modules': true,
-        'jsx': true
-      },
-      rules: {
-        'no-console': 1,
-        'no-unused-vars': 1
-      },
-      globals: {},
+      extends: ["eslint:recommended", "plugin:react/recommended"],
       plugins: ["react"],
       envs: ['browser', 'es6']
     }))
