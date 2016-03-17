@@ -3,26 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createBudget, resetCurrentBudget } from '../../actions';
 
-import { Form } from 'formsy-react';
-import FRC, { Input } from 'formsy-react-components';
-
-const MyForm = React.createClass({
-  mixins: [FRC.ParentContextMixin],
-  propTypes: {
-    children: PropTypes.array
-  },
-  render() {
-    return (
-      <Form
-        className={this.getLayoutClassName()}
-        {...this.props}
-        ref="formsy"
-      >
-        {this.props.children}
-      </Form>
-    );
-  }
-});
+import { Input } from 'formsy-react-components';
+import MyForm from '../../components/my_form';
 
 class NewBudget extends Component {
 

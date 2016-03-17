@@ -7,6 +7,7 @@ class Home extends Component {
   componentWillMount() {
     this.props.removeCurrentBudget();
   }
+  
   render () {
     return (
       <p><strong>Choose a budget to the left or create a new one.</strong></p>
