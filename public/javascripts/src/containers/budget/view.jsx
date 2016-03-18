@@ -4,13 +4,15 @@ import { bindActionCreators } from 'redux';
 import { fetchBudget, removeCurrentBudget, updateBudget } from '../../actions';
 
 import MyForm from '../../components/my_form';
-import { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } from 'formsy-react-components';
+import { Checkbox, Input, Row, Select } from 'formsy-react-components';
 
 class ViewBudget extends Component {
   constructor (props) {
     super(props);
 
     this.onDepositSubmit = this.onDepositSubmit.bind(this);
+    this.onDepositRemove = this.onDepositRemove.bind(this);
+    this.updateDeposit = this.updateDeposit.bind(this);
   }
   componentWillMount () {
     this.props.fetchBudget(this.props.params.budget_id);
@@ -27,9 +29,26 @@ class ViewBudget extends Component {
   }
 
   onDepositSubmit (data) {
-    let newBudget = Object.assign({},this.props.budget);
+    let newBudget = Object.assign({}, this.props.budget);
     newBudget.deposits.push(data);
     this.props.updateBudget(newBudget);
+    console.log(this.refs.deposit_formsy);
+    this.refs.deposit_formsy.reset();
+  }
+
+  onDepositRemove (id) {
+    let newBudget = Object.assign({}, this.props.budget);
+    newBudget.deposits = newBudget.deposits.filter((d) => {return d._id !== id;})
+    this.props.updateBudget(newBudget);
+  }
+
+  updateDeposit (data) {
+    if (data.nativeEvent === undefined) {
+      let newBudget = Object.assign({}, this.props.budget),
+          deposit = newBudget.deposits.find((d) => {return d._id === data._id;});
+      deposit.paid = data.paid;
+      this.props.updateBudget(newBudget);
+    }
   }
 
   renderDeposits () {
@@ -38,13 +57,15 @@ class ViewBudget extends Component {
         <MyForm
           key={deposit._id}
           action="#"
-          onValidSubmit={this.onSubmit}
+          onChange={this.updateDeposit}
           layout='horizontal'
           ref='formsy'>
             <Input type="hidden" name="_id" value={deposit._id} />
             <Checkbox
               label={`${deposit.description} $${deposit.amount} ${deposit.due_date}`}
-              name="deposit" />
+              name="paid"
+              value={deposit.paid} />
+            <span className="remove glyphicon glyphicon-remove-sign" onClick={()=>{this.onDepositRemove(deposit._id)}} />
         </MyForm>
       );
     });
