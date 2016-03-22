@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchBudget, removeCurrentBudget, updateBudget } from '../../actions';
 
+import InputForm from '../../components/item_form';
+import EntryForm from '../../components/entry_form';
 import MyForm from '../../components/my_form';
 import { Checkbox, Input, Row, Select } from 'formsy-react-components';
 
@@ -53,21 +55,7 @@ class ViewBudget extends Component {
 
   renderDeposits () {
     return this.props.budget.deposits.map((deposit) => {
-      return (
-        <MyForm
-          key={deposit._id}
-          action="#"
-          onChange={this.updateDeposit}
-          layout='horizontal'
-          ref='formsy'>
-            <Input type="hidden" name="_id" value={deposit._id} />
-            <Checkbox
-              label={`${deposit.description} $${deposit.amount} ${deposit.due_date}`}
-              name="paid"
-              value={deposit.paid} />
-            <span className="remove glyphicon glyphicon-remove-sign" onClick={()=>{this.onDepositRemove(deposit._id)}} />
-        </MyForm>
-      );
+      return <InputForm key={deposit._id} item={deposit} onChange={this.updateDeposit} onRemove={this.onDepositRemove} />;
     });
   }
 
@@ -76,46 +64,16 @@ class ViewBudget extends Component {
       return <div>Retrieving budget.</div>
     }
 
+    let accounts_options = this.props.accounts.slice();
+    accounts_options.unshift({value: null, label: "Choose one..."});
+
     return (
       <div>
         <h3>{this.props.budget.name}</h3>
         <div>{this.props.budget.domain.start} to {this.props.budget.domain.end}</div>
         <h4>Deposits</h4>
         { this.renderDeposits() }
-        <MyForm
-          action="#"
-          onValidSubmit={this.onDepositSubmit}
-          layout='horizontal'
-          ref='deposit_formsy'>
-            <Input
-              name="description"
-              label="Description"
-              type="text"
-              value=""
-              required />
-            <Input
-              name="due_date"
-              label="Due Date"
-              type="date"
-              value=""
-              required />
-            <Input
-              name="amount"
-              label="Amount"
-              type="number"
-              placeholder="0.00"
-              value=""
-              addonBefore={<span className="glyphicon glyphicon-usd"></span>}
-              required />
-            <Select
-              name="account_id"
-              label="Account"
-              options={this.props.accounts}
-              required />
-            <Row layout="horizontal">
-              <input className="btn btn-primary" formNoValidate={true} type="submit" defaultValue="Submit" />
-            </Row>
-        </MyForm>
+        <EntryForm accounts_options={accounts_options} onSubmit={this.onDepositSubmit} />
       </div>
     );
   }
